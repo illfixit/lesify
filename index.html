@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="enterText">Enter your text here:</div>
+    <br />
+    <textarea id="textInput"></textarea><br />
+    <button id="boldifyButton">Boldify</button>
+    <script>
+      let bB = document.getElementById('boldifyButton');
+      bB.addEventListener('click', () => {
+        let inputText = document.getElementById('textInput').value;
+        let t = document.createElement('p');
+        t.id = 'resultText';
+        tArr = inputText.split(' ');
+        tArr = tArr.map((el) => {
+          if (el.length > 3) {
+            return `<b>${el.slice(0, Math.ceil(el.length / 3))}</b>${el.slice(
+              Math.ceil(el.length / 3)
+            )}`;
+          } else {
+            return el;
+          }
+        });
+        resultHTML = tArr.join(' ');
+        t.innerHTML = resultHTML;
+        document.body.appendChild(t);
+      });
+    </script>
+  </body>
+</html>
