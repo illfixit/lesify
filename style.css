@@ -23,6 +23,11 @@
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
+pre {
+  background-color: red;
+  tab-size: 4;
+}
+
 b {
   margin: 0;
 }

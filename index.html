@@ -16,14 +16,18 @@
       let bB = document.getElementById('lesifyButton');
       bB.addEventListener('click', () => {
         let inputText = document.getElementById('textInput').value;
+        console.log('inputText', JSON.stringify(inputText));
         let t = document.createElement('p');
         t.id = 'resultText';
         tArr = inputText.split('\n');
         tArr = tArr.map((ele) => {
+          ele = ele.replaceAll('        ', '    ');
+          ele = ele.replaceAll('    ', '  ');
+          ele = ele.replaceAll('  ', ' ');
           let eleArr = ele.split(' ');
           eleArr = eleArr.map((el) => {
             console.log('el', el);
-            if (el.length > 3) {
+            if (el.length > 3 && !el.includes('  ')) {
               return `<b>${el.slice(0, Math.ceil(el.length / 3))}</b>${el.slice(
                 Math.ceil(el.length / 3)
               )}`;
