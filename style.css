@@ -15,7 +15,7 @@
 
 #enterText,
 #resultText {
-  width: 80vw;
+  width: 73vw;
   word-wrap: normal;
   font-size: 1.25rem;
   line-height: 2.5rem;
@@ -23,9 +23,26 @@
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-pre {
-  background-color: red;
-  tab-size: 4;
+#font-larger,
+#font-smaller {
+  display: flex;
+  position: fixed;
+  right: 1rem;
+  bottom: 5rem;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  width: 3rem;
+  border: 1px solid black;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  background: inherit;
+  color: inherit;
+}
+
+#font-larger {
+  bottom: 9rem;
 }
 
 b {

@@ -17,11 +17,15 @@
     <br />
     <textarea id="textInput"></textarea><br />
     <button id="lesifyButton">Lesify</button>
+    <button id="font-larger">+</button>
+    <button id="font-smaller">-</button>
     <script>
       let bB = document.getElementById('lesifyButton');
       bB.addEventListener('click', () => {
         let inputText = document.getElementById('textInput').value;
-        console.log('inputText', JSON.stringify(inputText));
+
+        // console.log('inputText', JSON.stringify(inputText));
+
         let t = document.createElement('p');
         t.id = 'resultText';
         tArr = inputText.split('\n');
@@ -31,7 +35,6 @@
           ele = ele.replaceAll('  ', ' ');
           let eleArr = ele.split(' ');
           eleArr = eleArr.map((el) => {
-            console.log('el', el);
             if (el.length > 3 && !el.includes('  ')) {
               return `<b>${el.slice(0, Math.ceil(el.length / 3))}</b>${el.slice(
                 Math.ceil(el.length / 3)
@@ -46,6 +49,31 @@
         resultHTML = tArr.join('<br>');
         t.innerHTML = resultHTML;
         document.body.appendChild(t);
+      });
+
+      let fontLargerButton = document.getElementById('font-larger');
+      fontLargerButton.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        let resultText = document.getElementById('resultText');
+        let resultTextFontSize = resultText.style.fontSize;
+        if (!resultTextFontSize) resultTextFontSize = '1.25';
+
+        resultText.style.fontSize = `${
+          Math.round(parseFloat(resultTextFontSize) * 110) / 100
+        }rem`;
+      });
+
+      let fontSmallerButton = document.getElementById('font-smaller');
+      fontSmallerButton.addEventListener('click', (ev) => {
+        ev.preventDefault();
+
+        let resultText = document.getElementById('resultText');
+        let resultTextFontSize = resultText.style.fontSize;
+        if (!resultTextFontSize) resultTextFontSize = '1.25';
+
+        resultText.style.fontSize = `${
+          Math.round((parseFloat(resultTextFontSize) * 100) / 1.1) / 100
+        }rem`;
       });
     </script>
   </body>
