@@ -51,8 +51,8 @@
       #control {
         display: flex;
         position: fixed;
-        bottom: 0;
         left: 0;
+        bottom: 0;
         margin: 0;
         height: 3rem;
         width: 100vw;
@@ -146,6 +146,14 @@
       </button>
     </div>
     <script>
+      const isInStandaloneMode = () =>
+        window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone ||
+        document.referrer.includes('android-app://');
+
+      if (isInStandaloneMode()) {
+        document.getElementById('control').style.height = '4.4rem';
+      }
       let bB = document.getElementById('lesifyButton');
       bB.addEventListener('click', () => {
         let inputText = document.getElementById('textInput').value;
