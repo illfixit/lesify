@@ -12,6 +12,7 @@
     <link rel="icon" type="image/png" href="./icon.png" />
     <!-- <link rel="stylesheet" href="style.css" /> -->
     <style>
+
       * {
         box-sizing: border-box;
         margin: 0 0 1rem 0.5rem;
@@ -42,10 +43,12 @@
 
       #resultText {
         margin-bottom: 5rem !important;
+        font-family: 'Open Dyslexic';
       }
 
-      #lesifyButton {
+      #lesifyButton, #addGapsButton {
         height: 2rem;
+        padding: 0.3rem;
       }
 
       #control {
@@ -128,6 +131,8 @@
     <br />
     <textarea id="textInput"></textarea><br />
     <button id="lesifyButton">Lesify</button>
+    <button id="addGapsButton">Add Gaps</button>
+
     <div id="control">
       <button id="font-smaller">-</button>
       <button id="font-larger">+</button>
@@ -178,6 +183,65 @@
             }
           });
           return eleArr.join(' ');
+        });
+
+        resultHTML = tArr.join('<br>');
+        t.innerHTML = resultHTML;
+        document.body.appendChild(t);
+      });
+
+      let gapsB = document.getElementById('addGapsButton');
+      gapsB.addEventListener('click', () => {
+        let inputText = document.getElementById('textInput').value;
+
+        // console.log('inputText', JSON.stringify(inputText));
+
+        let t = document.createElement('p');
+        t.id = 'resultText';
+        tArr = inputText.split('\n');
+        tArr = tArr.map((ele) => {
+          ele = ele.replaceAll('        ', '    ');
+          ele = ele.replaceAll('    ', '  ');
+          ele = ele.replaceAll('  ', ' ');
+          let eleArr = ele.split(' ');
+
+
+          eleArr = eleArr.map((element) => {
+
+            if (element.length < 4) return element
+
+            let start = ''
+            let end = ''
+
+            let c = Math.floor(Math.random()*element.length/3)
+            let l
+
+
+            if (element.length > 5) l = 3
+            if (element.length == 5) l = 2
+            if (element.length == 4) l = 1
+
+            let und = '_'.repeat(l)
+            let new_element
+
+            new_element = element.slice(0,c*l) + und + element.slice(c*l+l)
+            // console.log(new_element)
+            new_element = element.split('').map((el, i) => {
+              if(!/^[A-Z]$/i.test(el)) {
+                console.log('el', el)
+                return el
+              } else {
+                console.log('new_element[i]', new_element[i])
+
+                return new_element[i]
+              }
+            }).join('')
+
+            return new_element
+          });
+
+          return eleArr.join(' ');
+
         });
 
         resultHTML = tArr.join('<br>');
