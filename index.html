@@ -46,7 +46,7 @@
         font-family: 'Open Dyslexic';
       }
 
-      #lesifyButton, #addGapsButton {
+      #lesifyButton, #addGapsButton, #clearInputButton, #clearResultButton {
         height: 2rem;
         padding: 0.3rem;
       }
@@ -132,7 +132,9 @@
     <textarea id="textInput"></textarea><br />
     <button id="lesifyButton">Lesify</button>
     <button id="addGapsButton">Add Gaps</button>
-
+    <button id="clearInputButton" onclick="document.getElementById('textInput').value = ''">Clear Input</button>
+    <button id="clearResultButton" onclick="document.getElementById('resultText').innerHTML = ''">Clear Result</button>
+    <p id="resultText"></p>
     <div id="control">
       <button id="font-smaller">-</button>
       <button id="font-larger">+</button>
@@ -164,10 +166,9 @@
         let inputText = document.getElementById('textInput').value;
 
         // console.log('inputText', JSON.stringify(inputText));
+        let t = document.getElementById('resultText')
 
-        let t = document.createElement('p');
-        t.id = 'resultText';
-        tArr = inputText.split('\n');
+        let tArr = inputText.split('\n');
         tArr = tArr.map((ele) => {
           ele = ele.replaceAll('        ', '    ');
           ele = ele.replaceAll('    ', '  ');
@@ -186,8 +187,11 @@
         });
 
         resultHTML = tArr.join('<br>');
-        t.innerHTML = resultHTML;
-        document.body.appendChild(t);
+        t.innerHTML += '<br>';
+        t.innerHTML += '- - - - -';
+        t.innerHTML += '<br>';
+        t.innerHTML += resultHTML;
+
       });
 
       let gapsB = document.getElementById('addGapsButton');
@@ -196,9 +200,9 @@
 
         // console.log('inputText', JSON.stringify(inputText));
 
-        let t = document.createElement('p');
-        t.id = 'resultText';
-        tArr = inputText.split('\n');
+        let t = document.getElementById('resultText')
+
+        let tArr = inputText.split('\n');
         tArr = tArr.map((ele) => {
           ele = ele.replaceAll('        ', '    ');
           ele = ele.replaceAll('    ', '  ');
@@ -227,11 +231,9 @@
             new_element = element.slice(0,c*l) + und + element.slice(c*l+l)
             // console.log(new_element)
             new_element = element.split('').map((el, i) => {
-              if(!/^[A-Z]$/i.test(el)) {
-                console.log('el', el)
+              if(!/^[A-ZäüöÄÜÖß]$/i.test(el)) {
                 return el
               } else {
-                console.log('new_element[i]', new_element[i])
 
                 return new_element[i]
               }
@@ -245,8 +247,13 @@
         });
 
         resultHTML = tArr.join('<br>');
-        t.innerHTML = resultHTML;
-        document.body.appendChild(t);
+        if (t.innerHTML.length > 1) {
+          t.innerHTML += '<br>';
+          t.innerHTML += '- - - - -';
+        }
+
+        t.innerHTML += '<br>';
+        t.innerHTML += resultHTML;
       });
 
       let fontLargerButton = document.getElementById('font-larger');
