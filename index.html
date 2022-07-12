@@ -187,8 +187,11 @@
         });
 
         resultHTML = tArr.join('<br>');
-        t.innerHTML += '<br>';
-        t.innerHTML += '- - - - -';
+        if (t.innerHTML.trim().length > 1) {
+          t.innerHTML += '<br>';
+          t.innerHTML += '- - - - -';
+        }
+
         t.innerHTML += '<br>';
         t.innerHTML += resultHTML;
 
@@ -247,7 +250,7 @@
         });
 
         resultHTML = tArr.join('<br>');
-        if (t.innerHTML.length > 1) {
+        if (t.innerHTML.trim().length > 1) {
           t.innerHTML += '<br>';
           t.innerHTML += '- - - - -';
         }
