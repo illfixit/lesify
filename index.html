@@ -46,6 +46,7 @@
         border-bottom: 1px solid black;
         margin: 0;
         padding: 0;
+        cursor: pointer;
       }
 
       .notAlphaAnswer {
@@ -54,6 +55,7 @@
 
       #resultText {
         margin-bottom: 5rem !important;
+        cursor: default;
       }
 
       #lesifyButton, #addGapsButton, #clearInputButton, #clearResultButton {
@@ -178,7 +180,7 @@
       }
 
       const showAnswer = function(el) {
-        console.log(el);
+        // console.log(el);
         el.style.color = 'blue';
         el.style.underline = 'none';
       }
@@ -242,14 +244,24 @@
             let start = ''
             let end = ''
 
-            let c = Math.floor(Math.random()*element.length/3)
             let l
 
 
-            if (element.length > 6) l = 3
-            if (element.length == 6) l = 2
-            if (element.length == 5 || element.length == 4) l = 1
+            // if (element.length > 7) l = 4
+            // if (element.length == 6 || element.length == 7) l = 3
+            // if (element.length == 5) l = 3
+            // if (element.length == 4 || element.length == 3) l = 2
+            // if (element.length == 2 ) l = 1
 
+
+            if (element.length > 8) l = 4
+            if (element.length == 8 || element.length == 7) l = 3
+            if (element.length == 6 || element.length == 5 || element.length == 4 ) l = 2
+
+            let c = Math.floor(Math.random()*(element.length-l-1))
+
+
+            // console.log(element, l);
             // let und = '_'.repeat(l)
             // let new_element
 
@@ -264,7 +276,7 @@
             //   }
             // }).join('')
 
-            let und = element.slice(c*l, c*l+l).split('');
+            let und = element.slice(c+l, c+l+l).split('');
 
             und = und.map((el, i) => {
               if(!/^[A-ZäüöÄÜÖß]$/i.test(el)) {
@@ -278,7 +290,7 @@
 
             let new_element
 
-            new_element = element.slice(0,c*l) + und_result + element.slice(c*l+l)
+            new_element = element.slice(0,c+l) + und_result + element.slice(c+l+l)
             // console.log(new_element)
 
             return new_element
