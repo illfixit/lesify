@@ -36,14 +36,25 @@
         hyphens: auto;
         /* word-break: break-all; */
         font-size: 1.25rem;
+        font-stretch: ;
         line-height: 2.5rem;
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
           'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       }
 
+      .answer {
+        color: white;
+        border-bottom: 1px solid black;
+        margin: 0;
+        padding: 0;
+      }
+
+      .notAlphaAnswer {
+        color: black;
+      }
+
       #resultText {
         margin-bottom: 5rem !important;
-        font-family: 'Open Dyslexic';
       }
 
       #lesifyButton, #addGapsButton, #clearInputButton, #clearResultButton {
@@ -110,6 +121,14 @@
           background: #3a3c3f;
         }
 
+        .answer {
+          color: #3a3c3f;
+        }
+
+        .notAlphaAnswer {
+          color: rgb(230, 224, 224); 
+        }
+
         #textInput {
           color: rgb(230, 224, 224);
           background: #3a3c3f;
@@ -157,6 +176,13 @@
       if (isInStandaloneMode()) {
         document.getElementById('control').style.height = '4.4rem';
       }
+
+      const showAnswer = function(el) {
+        console.log(el);
+        el.style.color = 'blue';
+        el.style.underline = 'none';
+      }
+
       let bB = document.getElementById('lesifyButton');
       bB.addEventListener('click', () => {
         let inputText = document.getElementById('textInput').value;
@@ -224,19 +250,36 @@
             if (element.length == 6) l = 2
             if (element.length == 5 || element.length == 4) l = 1
 
-            let und = '_'.repeat(l)
+            // let und = '_'.repeat(l)
+            // let new_element
+
+            // new_element = element.slice(0,c*l) + und + element.slice(c*l+l)
+            // // console.log(new_element)
+            // new_element = element.split('').map((el, i) => {
+            //   if(!/^[A-ZäüöÄÜÖß]$/i.test(el)) {
+            //     return el
+            //   } else {
+
+            //     return new_element[i]
+            //   }
+            // }).join('')
+
+            let und = element.slice(c*l, c*l+l).split('');
+
+            und = und.map((el, i) => {
+              if(!/^[A-ZäüöÄÜÖß]$/i.test(el)) {
+                return `<span class="notAlphaAnswer">${el}</span>`
+              } else {
+                return el 
+              }
+            }).join('');
+
+            let und_result = "<span class='answer' onclick='showAnswer(this)'>" + und + '</span>';
+
             let new_element
 
-            new_element = element.slice(0,c*l) + und + element.slice(c*l+l)
+            new_element = element.slice(0,c*l) + und_result + element.slice(c*l+l)
             // console.log(new_element)
-            new_element = element.split('').map((el, i) => {
-              if(!/^[A-ZäüöÄÜÖß]$/i.test(el)) {
-                return el
-              } else {
-
-                return new_element[i]
-              }
-            }).join('')
 
             return new_element
           });
