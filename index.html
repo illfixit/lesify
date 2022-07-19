@@ -13,6 +13,11 @@
     <!-- <link rel="stylesheet" href="style.css" /> -->
     <style>
 
+      @font-face {
+        font-family: 'Open Dyslexic';
+        src: url(OpenDyslexic-Regular.otf);
+      }
+
       * {
         box-sizing: border-box;
         margin: 0 0 1rem 0.5rem;
@@ -20,7 +25,7 @@
       }
 
       #textInput {
-        height: 30vh;
+        height: 10vh;
         width: 88vw;
         padding: 0.5rem;
         word-wrap: break-word;
@@ -41,6 +46,10 @@
           'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       }
 
+      #enterText {
+        margin: 0.5rem;
+      }
+
       .answer {
         color: white;
         border-bottom: 1px solid black;
@@ -58,7 +67,11 @@
         cursor: default;
       }
 
-      #lesifyButton, #addGapsButton, #clearInputButton, #clearResultButton {
+      .openDyslexic {
+        font-family: 'Open Dyslexic'!important;
+      }
+
+      #lesifyButton, #addGapsButton, #plainTextButton, #toggleDyslexicFontButton, #clearInputButton, #clearResultButton {
         height: 2rem;
         padding: 0.3rem;
       }
@@ -153,10 +166,12 @@
   </head>
   <body>
     <div id="enterText">Enter your text here:</div>
-    <br />
     <textarea id="textInput"></textarea><br />
     <button id="lesifyButton">Lesify</button>
     <button id="addGapsButton">Add Gaps</button>
+    <button id="plainTextButton">Plain Text</button>
+    <button id="toggleDyslexicFontButton">Toggle Dyslexic</button>    
+    <br>
     <button id="clearInputButton" onclick="document.getElementById('textInput').value = ''">Clear Input</button>
     <button id="clearResultButton" onclick="document.getElementById('resultText').innerHTML = ''">Clear Result</button>
     <p id="resultText"></p>
@@ -186,6 +201,8 @@
       if (isInStandaloneMode()) {
         document.getElementById('control').style.height = '4.4rem';
       }
+
+      const letters = /^[A-ZäüöÄÜÖßâçèéêîôûëïùœæñáíóúüàòășțãõaeoåäöøðýþāčēģīķļņōŗšūžąęėįųćśłńżźůěřđŴŵŷċġħgőűğşÂÇÈÉÊÎÔÛËÏÙŒÆÑÁÍÓÚÜÀÒĂȘȚÃÕAEOÅÄÖØÐÝÞĀČĒĢĪĶĻŅŌŖŠŪŽĄĘĖĮŲĆŚŁŃŻŹŮĚŘĐŶĊĠĦGŐŰĞŞ]$/i
 
       const showAnswer = function(el) {
         // console.log(el);
@@ -229,6 +246,47 @@
 
       });
 
+      let plainTextB = document.getElementById('plainTextButton');
+      plainTextB.addEventListener('click', () => {
+        let inputText = document.getElementById('textInput').value;
+
+        // console.log('inputText', JSON.stringify(inputText));
+        let t = document.getElementById('resultText')
+
+        let tArr = inputText.split('\n');
+        tArr = tArr.map((ele) => {
+          ele = ele.replaceAll('        ', '    ');
+          ele = ele.replaceAll('    ', '  ');
+          ele = ele.replaceAll('  ', ' ');
+          return ele
+        });
+
+        resultHTML = tArr.join('<br>');
+        if (t.innerHTML.trim().length > 1) {
+          t.innerHTML += '<br>';
+          t.innerHTML += '- - - - -';
+        }
+
+        t.innerHTML += '<br>';
+        t.innerHTML += resultHTML;
+
+      });
+
+      
+      let toggleDyslexicFontB = document.getElementById('toggleDyslexicFontButton');
+      toggleDyslexicFontB.addEventListener('click', () => {
+
+        let t = document.getElementById('resultText');
+        if(t.classList.contains('openDyslexic')) {
+          t.classList.remove('openDyslexic')
+        } else {
+          t.classList.add('openDyslexic');
+        } 
+
+      });
+
+
+
       let gapsB = document.getElementById('addGapsButton');
       gapsB.addEventListener('click', () => {
         let inputText = document.getElementById('textInput').value;
@@ -262,11 +320,11 @@
             // if (element.length == 2 ) l = 1
 
 
-            if (element.length > 8) l = 4
+            if (element.length > 8) l = Math.ceil(element.length/3)+1
             if (element.length == 8 || element.length == 7) l = 3
             if (element.length == 6 || element.length == 5 || element.length == 4 ) l = 2
 
-            let c = Math.floor(Math.random()*(element.length-l-1))
+            let c = Math.floor(Math.random()*(element.length-l-2))
 
 
             // console.log(element, l);
@@ -287,7 +345,7 @@
             let und = element.slice(c+l, c+l+l).split('');
 
             und = und.map((el, i) => {
-              if(!/^[A-ZäüöÄÜÖß]$/i.test(el)) {
+              if(!letters.test(el)) {
                 return `<span class="notAlphaAnswer">${el}</span>`
               } else {
                 return el 
@@ -326,7 +384,7 @@
         if (!resultTextFontSize) resultTextFontSize = '1.25';
 
         resultText.style.fontSize = `${
-          Math.round(parseFloat(resultTextFontSize) * 110) / 100
+          Math.round(parseFloat(resultTextFontSize) * 105) / 100
         }rem`;
       });
 
@@ -339,7 +397,7 @@
         if (!resultTextFontSize) resultTextFontSize = '1.25';
 
         resultText.style.fontSize = `${
-          Math.round((parseFloat(resultTextFontSize) * 100) / 1.1) / 100
+          Math.round((parseFloat(resultTextFontSize) * 100) / 1.05) / 100
         }rem`;
       });
     </script>
