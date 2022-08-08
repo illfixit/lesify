@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title>Lesify DE</title>
+    <title>Lesify</title>
 
     <link rel="icon_ios" href="./icon.png" type="image/icon type" />
     <link rel="apple-touch-icon" href="./icon.png" />
@@ -71,7 +71,7 @@
         font-family: 'Open Dyslexic'!important;
       }
 
-      .textButtons {
+      #lesifyButton, #addGapsButton, #plainTextButton, #toggleDyslexicFontButton, #clearInputButton, #clearResultButton {
         height: 2rem;
         padding: 0.3rem;
       }
@@ -167,23 +167,13 @@
   <body>
     <div id="enterText">Enter your text here:</div>
     <textarea id="textInput"></textarea><br />
-    <button id="plainTextButton" class="textButtons">Plain Text</button>
-    <button id="lesifyButton" class="textButtons">Lesify</button>
-    <button id="addGapsButton" class="textButtons">Add Gaps</button>
-    <button id="toggleDyslexicFontButton" class="textButtons">Toggle Dyslexic</button> 
+    <button id="lesifyButton">Lesify</button>
+    <button id="addGapsButton">Add Gaps</button>
+    <button id="plainTextButton">Plain Text</button>
+    <button id="toggleDyslexicFontButton">Toggle Dyslexic</button>    
     <br>
-
-    <button id="hideArticles" class="textButtons">Hide Articles</button>
-    <button id="hidePrepositions" class="textButtons">Hide Prepositions</button>
-    <button id="hideArticlesAndPrepositions" class="textButtons">Hide Articles And Prepositions</button>
-
-
-   
-    <br>
-    <button id="clearInputButton" class="textButtons" onclick="document.getElementById('textInput').value = ''">Clear Input</button>
-    <button id="clearResultButton" class="textButtons" onclick="document.getElementById('resultText').innerHTML = ''">Clear Result</button>
-    <button id="clearBothButton" class="textButtons" onclick="document.getElementById('textInput').value = ''; document.getElementById('resultText').innerHTML = ''">Clear Result</button>
-    
+    <button id="clearInputButton" onclick="document.getElementById('textInput').value = ''">Clear Input</button>
+    <button id="clearResultButton" onclick="document.getElementById('resultText').innerHTML = ''">Clear Result</button>
     <p id="resultText"></p>
     <div id="control">
       <button id="font-smaller">-</button>
@@ -212,11 +202,7 @@
         document.getElementById('control').style.height = '4.4rem';
       }
 
-      const letters = /^[A-ZäüöÄÜÖß]$/i
-      const articles = ["der","dies","die","das","den","dem","des","einen","einem","einer","eines","eine","ein","Dieses","Diese","Dies","Die","Der","Das","Den","Dem","Einer","Einen","Einem","Eines","Eine","Ein"]
-      const prepositions = ["am","ans","im","ins","à","ab","abseits","abzüglich","an","anfangs","angelegentlich","angesichts","anhand","anlässlich","anstatt","anstelle","auf","aufgrund","aus","ausgenommen","ausschließlich","außer","außerhalb","bar","behufs","bei","beiderseits,","beidseits","betreffs","bezüglich","binnen","bis","dank","diesseits","durch","einbezüglich","eingedenk","einschließlich","entgegen","entlang","entsprechend","exklusive","fern","fernab","für","gegen","gegenüber","gelegentlich","gemäß","gen","getreu","gleich","halber","hinsichtlich","hinter","in","inpuncto","infolge","inklusive","inmitten","innerhalb","je","jenseits","kontra","kraft","lang","längs","längsseits","laut","links","mangels","minus","mit","mitsamt","mittels","nach","nächst","nah,","nahe","namens","neben","nebst","nördlich","nordöstlich","nordwestlich","ob","oberhalb","ohne","östlich","per","plus","pro","rechts","rücksichtlich","samt","seit","seitens","seitlich","sonder","statt","südlich","südöstlich","südwestlich","trotz","über","um","willen","unfern","ungeachtet","unter","unterhalb","unweit","vermittels","vermöge","vis-a-vis","vis-à-vis","von","vonSeiten","vonseiten","vor","vorbehaltlich","während","wegen","westlich","wider","zeit","zu","zufolge","zugunsten","zulasten","zuliebe","zusätzlich","zuungunsten","zuwider","zuzüglich","zwecks","zwischen","Am","Ans","Im","Ins","À","Ab","Abseits","Abzüglich","An","Anfangs","Angelegentlich","Angesichts","Anhand","Anlässlich","Anstatt","Anstelle","Auf","Aufgrund","Aus","Ausgenommen","Ausschließlich","Außer","Außerhalb","Bar","Behufs","Bei","Beiderseits,","Beidseits","Betreffs","Bezüglich","Binnen","Bis","Dank","Diesseits","Durch","Einbezüglich","Eingedenk","Einschließlich","Entgegen","Entlang","Entsprechend","Exklusive","Fern","Fernab","Für","Gegen","Gegenüber","Gelegentlich","Gemäß","Gen","Getreu","Gleich","Halber","Hinsichtlich","Hinter","In","InPuncto","Infolge","Inklusive","Inmitten","Innerhalb","Je","Jenseits","Kontra","Kraft","Lang","Längs","Längsseits","Laut","Links","Mangels","Minus","Mit","Mitsamt","Mittels","Nach","Nächst","Nah,","Nahe","Namens","Neben","Nebst","Nördlich","Nordöstlich","Nordwestlich","Ob","Oberhalb","Ohne","Östlich","Per","Plus","Pro","Rechts","Rücksichtlich","Samt","Seit","Seitens","Seitlich","Sonder","Statt","Südlich","Südöstlich","Südwestlich","Trotz","Über","Um","Willen","Unfern","Ungeachtet","Unter","Unterhalb","Unweit","Vermittels","Vermöge","Vis-A-Vis","Vis-À-Vis","Von","VonSeiten","Vonseiten","Vor","Vorbehaltlich","Während","Wegen","Westlich","Wider","Zeit","Zu","Zufolge","Zugunsten","Zulasten","Zuliebe","Zusätzlich","Zuungunsten","Zuwider","Zuzüglich","Zwecks","Zwischen"];
-      const articlesAndPrepositions = articles.concat(prepositions);
-
+      const letters = /^[A-ZäüöÄÜÖßâçèéêîôûëïùœæñáíóúàòășțãõaeoåøðýþāčēģīķļņōŗšūžąęėįųćśłńżźůěřđŴŵŷċġħgőűğşÂÇÈÉÊÎÔÛËÏÙŒÆÑÁÍÓÚÀÒĂȘȚÃÕEOÅØÐÝÞĀČĒĢĪĶĻŅŌŖŠŪŽĄĘĖĮŲĆŚŁŃŻŹŮĚŘĐŶĊĠĦGŐŰĞŞɑɒbḇβcɔɕdḏḍˁəɚɛɝfḡhʰḥḫẖiɪỉɨjʲǰkḳḵlḷɬɫmnŋṇɲɴŏɸθp̅qrɹɾʀʁṛsṣʃtṭṯʨʂuʒʊʌʳɲɜm̥ɱn̼ɳ̊ɲŋɴpb̪tdʈɖcɟkɡqɢʡʔsz̠ʃʒʂʐɕʑɸβfvθðɹ̝˔çʝxɣχʁʜʢhɻħʕɦʋjɰ̞ⱱ̟ɾɽ̆ʙrʀɬɮɭʎʟlɺʼʘǀǂʞǁɓɗᶑʄɠʛɥʍwɧ]$/i
 
       const showAnswer = function(el) {
         // console.log(el);
@@ -389,102 +375,6 @@
         t.innerHTML += '<br>';
         t.innerHTML += resultHTML;
       });
-
-
-      let hidePrepositionsButton = document.getElementById('hidePrepositions');
-      hidePrepositionsButton.addEventListener('click', () => {
-        let inputText = document.getElementById('textInput').value;
-
-        let t = document.getElementById('resultText')
-       
-
-        let tArr = inputText.split('\n');
-
-        tArr = tArr.map((ele) => {
-          // console.log(ele);
-          arr = ele.split(' ');
-          arr = arr.map(a=>{if(prepositions.includes(a)) { return `<span class='answer' onclick='showAnswer(this)'>${a}</span>` } else { return a}})
-
-
-          console.log(arr);
-
-
-          return arr.join(' ');
-        });
-
-        resultHTML = tArr.join('<br>');
-        if (t.innerHTML.trim().length > 1) {
-          t.innerHTML += '<br>';
-          t.innerHTML += '- - - - -';
-        }
-
-        t.innerHTML += '<br>';
-        t.innerHTML += resultHTML;
-      });
-
-      let hideArticlesButton = document.getElementById('hideArticles');
-      hideArticlesButton.addEventListener('click', () => {
-        let inputText = document.getElementById('textInput').value;
-
-        let t = document.getElementById('resultText')
-       
-
-        let tArr = inputText.split('\n');
-
-        tArr = tArr.map((ele) => {
-
-          arr = ele.split(' ');
-          arr = arr.map(a=>{if(articles.includes(a)) { return `<span class='answer' onclick='showAnswer(this)'>${a}</span>` } else { return a}})
-
-
-          console.log(arr);
-
-
-          return arr.join(' ');
-        });
-
-        resultHTML = tArr.join('<br>');
-        if (t.innerHTML.trim().length > 1) {
-          t.innerHTML += '<br>';
-          t.innerHTML += '- - - - -';
-        }
-
-        t.innerHTML += '<br>';
-        t.innerHTML += resultHTML;
-      });
-
-      let hideArticlesAndPrepositionsButton = document.getElementById('hideArticlesAndPrepositions');
-      hideArticlesAndPrepositionsButton.addEventListener('click', () => {
-        let inputText = document.getElementById('textInput').value;
-
-        let t = document.getElementById('resultText')
-
-
-        let tArr = inputText.split('\n');
-
-        tArr = tArr.map((ele) => {
-
-          arr = ele.split(' ');
-          arr = arr.map(a=>{if(articlesAndPrepositions.includes(a)) { return `<span class='answer' onclick='showAnswer(this)'>${a}</span>` } else { return a}})
-
-
-          console.log(arr);
-
-
-          return arr.join(' ');
-        });
-
-        resultHTML = tArr.join('<br>');
-        if (t.innerHTML.trim().length > 1) {
-          t.innerHTML += '<br>';
-          t.innerHTML += '- - - - -';
-        }
-
-        t.innerHTML += '<br>';
-        t.innerHTML += resultHTML;
-        });
-
-
 
       let fontLargerButton = document.getElementById('font-larger');
       fontLargerButton.addEventListener('click', (ev) => {
